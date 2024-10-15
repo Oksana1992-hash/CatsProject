@@ -15,9 +15,14 @@ def get_cat(url):
 def new_get_img():
     img = get_cat(url)
     if img:
-        t_m.config(image=img)
+        new_win = Toplevel()
+        t_m = Label(new_win, image=img)
         t_m.image = img
+        t_m.pack()
 
+
+def exit_win():
+    window.destroy()
 window = Tk()
 window.title('Caats')
 window.geometry(f'500x440+{window.winfo_screenwidth()//2-250}+{window.winfo_screenheight()//2-220}')
@@ -29,7 +34,14 @@ url = 'https://cataas.com/cat'
 t_m = Label()
 t_m.pack()
 
-btn = Button(window, text='Получить кота', command=new_get_img)
-btn.pack()
+main_menu = Menu(window)
+window.config(menu=main_menu)
+file_menu = Menu(main_menu, tearoff=0)
+
+main_menu.add_cascade(label='Файл', menu=file_menu)
+file_menu.add_command(label='Получить кота', command=new_get_img)
+file_menu.add_separator()
+file_menu.add_command(label='Выход', command=exit_win)
+
 
 window.mainloop()

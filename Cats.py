@@ -10,6 +10,7 @@ def load_image(url):
         response.raise_for_status() #строка нужна для обработки исключений, если будет какая то ошибка
         image_data = BytesIO(response.content) #в переменную положим обработанное изображение. контент ответа будет преобразована с помощью BytesIO
         img = Image.open(image_data) #открываем картинку с помощью библиотеки Pillow
+        img.thumbnail((600, 480), Image.Resampling.LANCZOS) #подогнать изображение под размеры окна и сохранить его качество
         return ImageTk.PhotoImage(img) #функция возвращает эту картинку
     except Exception as e:
         print(f'Произошла ошибка {e}')
@@ -25,7 +26,7 @@ def set_image():
 
 window = Tk()
 window.title('Cats')
-window.geometry('600x480')
+window.geometry('600x520')
 
 label = Label()
 label.pack()
